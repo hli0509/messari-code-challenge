@@ -53,6 +53,9 @@ async function main() {
     .startOf("day");
 
   let nearestBlock = await getNearestBlock(startDate.unix());
+  if (nearestBlock < 12369620) {
+    throw new Error("uniswap v3 subgraph only has data starting at block number 12369620, try a new period")
+  }
   let lastId = "0x0";
 
   // get current pools data
@@ -117,4 +120,9 @@ async function main() {
   `);
 }
 
-main();
+try {
+  main();
+} catch (e) {
+  console.error(e)
+}
+
